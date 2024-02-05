@@ -2,7 +2,7 @@
 
 ## Unisx
 
-`unisx` is a tiny (~512 bytes gzipped) React Native utility for Unistyles that simplifies the process of conditional styling. It allows you to apply a set of Unistyle styles based on certain conditions and component states, such as `pressed` or `hovered`. It was loosely inspired by the clsx utility that conditionally concatenates classNames into a string, however this utility's syntax differs and returns an array of styles.
+`unisx` is a tiny (~512 bytes gzipped) React Native utility for Unistyles that simplifies the process of conditional styling. It allows you to apply a set of Unistyle styles based on certain conditions and component states, such as `pressed` or `hovered` by utilizings Unistyles dynamic functions feature. Unisx is loosely inspired by the clsx utility that conditionally concatenates classNames into a string, however this utility's syntax differs and returns an array of styles.
 
 ## Installation
 
@@ -79,13 +79,13 @@ const MyComponent = () => {
 export default MyComponent;
 ```
 
-For components with state (e.g., `Pressable`), you can pass the state object to apply state-dependent styles:
+For components with state (e.g., `Pressable`), you can pass the state object into the dynamicFunction feature of Unistyles:
 
 ```javascript
-const MyButton = (state: PressableStateCallbackType) => {
+const MyButton = (dynamicFunctionParams: PressableStateCallbackType) => {
   const dynamicStyles = unisx({
     styles,
-    state, // Option pressable state (pressed, hovered, etc)
+    dynamicFunctionParams, // Optional params to pass to Unistyles, great for passing in pressed / hovered states
     conditions: [
       "defaultStyle",
       { rounded: true },
@@ -137,10 +137,10 @@ export const Button = ({
 }: IButton) => {
   const { styles } = useStyles(stylesheet);
 
-  const dynamicStyles = (state: PressableStateCallbackType) =>
+  const dynamicStyles = (dynamicFunctionParams: PressableStateCallbackType) =>
     unisx({
-      styles, // Styles from Unistyle's useStyles hook
-      state, // Option pressable state (pressed, hovered, etc)
+      styles,
+      dynamicFunctionParams,
       conditions: [
         "defaultStyle", // Always applies styles.defaultStyle
         { rounded: rounded === true }, // Applies styles.rounded if rounded (in this case a prop) is true.
@@ -173,13 +173,11 @@ const stylesheet = createStyleSheet((theme) => ({
     borderRadius: 12,
     backgroundColor: theme.colors.grey[11],
   },
-  primary: (state?: PressableStateCallbackType) => ({
-    backgroundColor: state?.pressed
-      ? theme.colors.grey[10]
-      : theme.colors.grey[11],
+  primary: ({ pressed }) => ({
+    backgroundColor: pressed ? theme.colors.grey[10] : theme.colors.grey[11],
   }),
-  secondary: (state?: PressableStateCallbackType) => ({
-    backgroundColor: state?.pressed ? "green" : "red",
+  secondary: ({ pressed }) => ({
+    backgroundColor: pressed ? "green" : "red",
   }),
   disabled: { backgroundColor: theme.colors.grey[7] },
   rounded: {
@@ -193,7 +191,6 @@ const stylesheet = createStyleSheet((theme) => ({
 
 ## Roadmap (possibly upcoming features, PRs welcome!)
 
-- Pressable state (hover, pressed, etc) support is accomplished by using Unistyles dynamic functions feature. Currently, unisx only supports passing in a single argument, while Unistyle supports arbitrary arguments. Unisx could probably be refactor to take this into account and align more closely with Unistyles.
 - It would be nice to have an optional array syntax to apply more than a single style per condition. Something like:
 
 ```javascript
@@ -206,7 +203,9 @@ const dynamicStyles = unisx({
 })
 ```
 
-- More generic types. Currently, unisx is typed but I have taken some liberties in typing the "state" argument and assume it will always of the type ViewStyle, PressableStyle or ImageStyle. This should probably become a generic that accepts any type (and probably would go hand in hand with roadmap #1).
+Note: Keys must be strings in Javascript objects. Maps can have keys of arrays, however I'm not sure how/if this could be made to work somehow using a map.
+
+- More generic types. Currently, unisx is typed but I have taken some liberties in typing the dynamic function as any. This should probably become a generic that accepts any type.
 
 ## Contributing
 
