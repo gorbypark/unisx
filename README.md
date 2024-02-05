@@ -33,10 +33,8 @@ const stylesheet = createStyleSheet((theme) => ({
     borderRadius: 12,
     backgroundColor: theme.colors.grey[11],
   },
-  primary: (state?: PressableStateCallbackType) => ({
-    backgroundColor: state?.pressed
-      ? theme.colors.grey[10]
-      : theme.colors.grey[11],
+  primary: ({ pressed }) => ({
+    backgroundColor: pressed ? theme.colors.grey[10] : theme.colors.grey[11],
   }),
   rounded: {
     borderRadius: 25,
