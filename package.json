@@ -7,6 +7,10 @@
     "name": "Mike Hamilton",
     "email": "mike@mikehamilton.net"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gorbypark/unisx.git"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
