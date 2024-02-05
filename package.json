@@ -1,0 +1,29 @@
+{
+  "name": "unisx",
+  "version": "0.1.1",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": {
+    "name": "Mike Hamilton",
+    "email": "mike@mikehamilton.net"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "release": "release-it"
+  },
+  "dependencies": {
+    "react-native": "^0.73.3"
+  },
+  "devDependencies": {
+    "release-it": "^17.0.3",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.59"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
