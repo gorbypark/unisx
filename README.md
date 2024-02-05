@@ -1,12 +1,8 @@
 ---
 
-# unisx
+## Unisx
 
-A flexible styling utility for React Native Unistyles that dynamically constructs styles based on provided conditions and an optional state object.
-
-## Description
-
-`unisx` is a React Native Unistyles utility that simplifies the process of conditional styling. It allows you to define a set of styles and apply them based on certain conditions and component states, such as `pressed` or `hovered`. It was loosely inspired by the clsx utility that conditionally concatenates classNames into a string, however this utility will return an array of styles.
+`unisx` is a tiny (~512 bytes gzipped) React Native utility for Unistyles that simplifies the process of conditional styling. It allows you to apply a set of Unistyle styles based on certain conditions and component states, such as `pressed` or `hovered`. It was loosely inspired by the clsx utility that conditionally concatenates classNames into a string, however this utility's syntax differs and returns an array of styles.
 
 ## Installation
 
@@ -194,6 +190,23 @@ const stylesheet = createStyleSheet((theme) => ({
   }),
 }));
 ```
+
+## Roadmap (possibly upcoming features, PRs welcome!)
+
+- Pressable state (hover, pressed, etc) support is accomplished by using Unistyles dynamic functions feature. Currently, unisx only supports passing in a single argument, while Unistyle supports arbitrary arguments. Unisx could probably be refactor to take this into account and align more closely with Unistyles.
+- It would be nice to have an optional array syntax to apply more than a single style per condition. Something like:
+
+```javascript
+const dynamicStyles = unisx({
+  styles,
+  conditions: [
+   	['style1,', 'style2']: variant === 'primary'}, // Proposed new optional syntax
+   	{style1: variant === 'primary'}, // existing syntax
+  ]
+})
+```
+
+- More generic types. Currently, unisx is typed but I have taken some liberties in typing the "state" argument and assume it will always of the type ViewStyle, PressableStyle or ImageStyle. This should probably become a generic that accepts any type (and probably would go hand in hand with roadmap #1).
 
 ## Contributing
 
