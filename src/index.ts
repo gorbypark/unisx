@@ -1,14 +1,14 @@
-import { TextStyle, ViewStyle, ImageStyle } from "react-native";
+import { TextStyle, ViewStyle, ImageStyle, StyleProp } from "react-native";
 
 // This is the dynamic functional style
 type UnistylesFunctionalStyle = (
   ...params: any // Todo: Can this be typed somehow? Not sure how to make a rest param generic...
-) => ViewStyle | TextStyle | ImageStyle;
+) => ViewStyle | StyleProp<TextStyle> | ImageStyle;
 
 // Non functional style with the above added in
 type UnistyleStyles =
   | ViewStyle
-  | TextStyle
+  | StyleProp<TextStyle>
   | ImageStyle
   | UnistylesFunctionalStyle;
 
@@ -23,8 +23,9 @@ export const unisx = ({
   styles,
   dynamicFunctionParams,
   conditions,
-}: UnisxOptions): (ViewStyle | TextStyle | ImageStyle)[] => {
-  const constructedStyles: (ViewStyle | TextStyle | ImageStyle)[] = [];
+}: UnisxOptions): (ViewStyle | StyleProp<TextStyle> | ImageStyle)[] => {
+  const constructedStyles: (ViewStyle | StyleProp<TextStyle> | ImageStyle)[] =
+    [];
 
   conditions.forEach((condition) => {
     if (typeof condition === "string") {
