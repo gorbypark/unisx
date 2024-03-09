@@ -1,14 +1,14 @@
-import { TextStyle, ViewStyle, ImageStyle, PressableStateCallbackType } from "react-native";
-type UnistyleFunctionalStyleArg = (params?: any) => ViewStyle | TextStyle | ImageStyle;
-type UnistyleStylesArg = ViewStyle | TextStyle | ImageStyle | UnistyleFunctionalStyleArg;
-interface UnisxArgs {
+import { TextStyle, ViewStyle, ImageStyle, StyleProp } from "react-native";
+type UnistylesFunctionalStyle = (...params: any) => ViewStyle | StyleProp<TextStyle> | ImageStyle;
+type UnistyleStyles = ViewStyle | StyleProp<TextStyle> | ImageStyle | UnistylesFunctionalStyle;
+interface UnisxOptions {
     styles: {
-        [key: string]: UnistyleStylesArg;
+        [key: string]: UnistyleStyles;
     };
-    state?: PressableStateCallbackType;
+    dynamicFunctionParams?: any;
     conditions: (string | {
         [key: string]: boolean | undefined;
     })[];
 }
-export declare const unisx: ({ styles, state, conditions, }: UnisxArgs) => (ViewStyle | TextStyle | ImageStyle)[];
+export declare const unisx: ({ styles, dynamicFunctionParams, conditions, }: UnisxOptions) => (ViewStyle | StyleProp<TextStyle> | ImageStyle)[];
 export {};
